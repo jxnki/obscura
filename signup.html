@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Signup</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('pexels-nubikini-385997.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            width: 400px;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #357edd;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            background-color: #357edd;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .form-group button:hover {
+            background-color: #2b66c1;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.85em;
+        }
+
+        .verified {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Signup with Aadhaar</h2>
+        <div class="form-group">
+            <label for="aadhaar">Aadhaar Number</label>
+            <input type="text" id="aadhaar" placeholder="Enter Aadhaar number (12 digits)">
+            <div id="aadhaar-error" class="error-message"></div>
+            <button onclick="verifyAadhaar()">Verify via DigiLocker</button>
+            <div id="aadhaar-status"></div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email">
+            <div id="email-error" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Minimum 6 characters">
+            <div id="password-error" class="error-message"></div>
+        </div>
+        <div class="form-group">
+            <button id="signupButton" disabled>Signup</button>
+        </div>
+    </div>
+
+    <script>
+        let aadhaarVerified = false;
+
+        async function fetchFirebaseConfig() {
+            try {
+                const res = await fetch('https://routify-4fza.onrender.com/firebaseconfig');
+                const config = await res.json();
+                firebase.initializeApp(config);
+                const auth = firebase.auth();
+
+                const signupButton = document.getElementById('signupButton');
+                const emailInput = document.getElementById('email');
+                const passwordInput = document.getElementById('password');
+
+                signupButton.addEventListener('click', () => {
+                    const email = emailInput.value;
+                    const password = passwordInput.value;
+
+                    document.getElementById('email-error').textContent = '';
+                    document.getElementById('password-error').textContent = '';
+
+                    if (!aadhaarVerified) {
+                        alert("Please verify Aadhaar first.");
+                        return;
+                    }
+
+                    if (!email) {
+                        document.getElementById('email-error').textContent = 'Enter your email';
+                        return;
+                    }
+
+                    if (password.length < 6) {
+                        document.getElementById('password-error').textContent = 'Password must be at least 6 characters';
+                        return;
+                    }
+
+                auth.createUserWithEmailAndPassword(email, password)
+                    .then(userCred => {
+                        alert('Signup successful!');
+                        window.location.href = 'login.html'; // go to login page
+                    })
+                    .catch(error => {
+                        document.getElementById('email-error').textContent = error.message;
+                    });
+                });
+            } catch (err) {
+                alert("Firebase config failed to load.");
+            }
+        }
+
+        function verifyAadhaar() {
+            const aadhaar = document.getElementById('aadhaar').value;
+            const aadhaarError = document.getElementById('aadhaar-error');
+            const aadhaarStatus = document.getElementById('aadhaar-status');
+            aadhaarError.textContent = '';
+            aadhaarStatus.textContent = '';
+
+            if (!/^\d{12}$/.test(aadhaar)) {
+                aadhaarError.textContent = "Invalid Aadhaar number.";
+                return;
+            }
+
+            // Simulated success (in real-world, you'd redirect to DigiLocker OAuth)
+            aadhaarVerified = true;
+            document.getElementById('signupButton').disabled = false;
+            aadhaarStatus.innerHTML = "✅ Verified via DigiLocker";
+            aadhaarStatus.className = 'verified';
+        }
+
+        fetchFirebaseConfig();
+    </script>
+</body>
+</html>
