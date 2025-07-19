@@ -1,0 +1,27 @@
+{
+  "name": "obscura",
+  "version": "1.0.0",
+  "description": "A smart, privacy-focused, social travel planner for students & local commuters.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jxnki/obscura.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jxnki/obscura/issues"
+  },
+  "homepage": "https://github.com/jxnki/obscura#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "openai": "^5.10.1"
+  }
+}
