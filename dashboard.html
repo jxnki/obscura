@@ -575,11 +575,8 @@
       <button class="tab-btn active" onclick="switchTab('my-events')">
         <i class="fas fa-route"></i> RouteHub
       </button>
-      <button class="tab-btn" onclick="switchTab('join-event')">
-        <i class="fas fa-users-plus"></i> Join Event
-      </button>
-      <button class="tab-btn" onclick="switchTab('create-event')">
-        <i class="fas fa-plus-circle"></i> Create Event
+      <button class="tab-btn" onclick="window.location.href='index3.html'">
+        <i class="fas fa-users-plus"></i> Create Event / Join Event
       </button>
     </div>
   </div>
@@ -591,86 +588,12 @@
     <div id="my-events" class="tab-content active full-width">
       <!-- Route Planning Section -->
       <div class="dashboard-card full-width">
-        <h3><i class="fas fa-route"></i> Route Planning & Navigation</h3>
-        
-        <div class="input-row">
-          <div class="input-group">
-            <i class="fas fa-play-circle"></i>
-            <input type="text" id="start" placeholder="Enter start location" />
-          </div>
-          
-          <div class="input-group">
-            <i class="fas fa-stop-circle"></i>
-            <input type="text" id="destination" placeholder="Enter destination" />
-          </div>
-        </div>
-        
-        <div class="input-row">
-          <div class="input-group">
-            <i class="fas fa-calendar"></i>
-            <input type="date" id="travelDate" />
-          </div>
-          
-          <div class="input-group">
-            <i class="fas fa-clock"></i>
-            <input type="time" id="travelTime" />
-          </div>
-        </div>
-        
-        <div class="input-group">
-          <i class="fas fa-car"></i>
-          <select id="transportMode">
-            <option value="driving">🚗 Driving</option>
-            <option value="walking">🚶 Walking</option>
-            <option value="cycling">🚴 Cycling</option>
-            <option value="transit">🚌 Public Transit</option>
-            <option value="train">🚂 Train</option>
-          </select>
-        </div>
         
         <div class="quick-actions" style="margin-bottom: 1rem;">
-          <button onclick="findRoute()" class="btn-primary">
+        <button onclick="window.location.href='route.html'" class="btn-primary">
             <i class="fas fa-route"></i> Find Route
           </button>
-          <button onclick="getCurrentLocation()" class="btn-secondary">
-            <i class="fas fa-location-arrow"></i> Use My Location
-          </button>
-          <button onclick="clearRoute()" class="btn-secondary">
-            <i class="fas fa-times"></i> Clear Route
-          </button>
-        </div>
-        
-        <!-- Location Sharing Controls -->
-        <div class="location-sharing-controls" style="margin-bottom: 1rem;">
-          <div class="location-control-card">
-            <div class="location-header">
-              <div class="location-info">
-                <h4><i class="fas fa-location-dot"></i> Location Sharing</h4>
-                <p id="locationStatusText">Location sharing is disabled</p>
-              </div>
-              <div class="location-actions">
-                <button id="enableLocationBtn" onclick="enableLocationSharing()" class="btn-success">
-                  <i class="fas fa-location-arrow"></i> Enable Location
-                </button>
-                <button id="disableLocationBtn" onclick="disableLocationSharing()" class="btn-danger" style="display: none;">
-                  <i class="fas fa-location-slash"></i> Disable Location
-                </button>
-              </div>
-            </div>
-            <div id="locationDetails" class="location-details" style="display: none;">
-              <div class="location-status-indicator">
-                <span class="status-dot online"></span>
-                <span>Location is being shared with your followers</span>
-              </div>
-              <div class="location-info-text">
-                <small><i class="fas fa-shield-alt"></i> Your location is only visible to users who follow you</small>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Interactive Map -->
-        <div id="map"></div>
+       
         
         <!-- Route Information -->
         <div id="routeInfo" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
@@ -734,24 +657,34 @@
             </div>
           </div>
           
-          <!-- Location Sharing Controls -->
-          <div class="location-sharing-section">
-            <div class="location-toggle-header">
-              <h4><i class="fas fa-location-dot"></i> Location Sharing</h4>
-              <div class="location-toggle-switch">
-                <input type="checkbox" id="shareLocationWithFollowers" class="toggle-checkbox">
-                <label for="shareLocationWithFollowers" class="toggle-label"></label>
+    <div class="location-sharing-controls" style="margin-bottom: 1rem;">
+          <div class="location-control-card">
+            <div class="location-header">
+              <div class="location-info">
+                <h4><i class="fas fa-location-dot"></i> Location Sharing</h4>
+                <p id="locationStatusText">Location sharing is disabled</p>
+              </div>
+              <div class="location-actions">
+                <button id="enableLocationBtn" onclick="enableLocationSharing()" class="btn-success">
+                  <i class="fas fa-location-arrow"></i> Enable Location
+                </button>
+                <button id="disableLocationBtn" onclick="disableLocationSharing()" class="btn-danger" style="display: none;">
+                  <i class="fas fa-location-slash"></i> Disable Location
+                </button>
               </div>
             </div>
-            <p class="location-sharing-description">
-              <i class="fas fa-shield-alt"></i>
-              Share your live location only with your followers for better event coordination
-            </p>
-            <div id="locationSharingStatus" class="location-status">
-              <span class="status-indicator offline"></span>
-              <span class="status-text">Location sharing is disabled</span>
+            <div id="locationDetails" class="location-details" style="display: none;">
+              <div class="location-status-indicator">
+                <span class="status-dot online"></span>
+                <span>Location is being shared with your followers</span>
+              </div>
+              <div class="location-info-text">
+                <small><i class="fas fa-shield-alt"></i> Your location is only visible to users who follow you</small>
+              </div>
             </div>
           </div>
+        </div>
+        
           
           <div class="profile-actions">
             <button class="btn-profile-primary" onclick="editProfile()">
@@ -797,8 +730,29 @@
       </div>
     </div>
 
+
     <!-- Join Event Tab -->
     <div id="join-event" class="tab-content">
+      <div class="dashboard-card full-width">
+        <h3><i class="fas fa-ticket-alt"></i> Join Event by Code</h3>
+        
+        <!-- Join by Code -->
+        <div class="join-by-code-section" style="margin-bottom: 2rem;">
+          <div class="input-group">
+            <i class="fas fa-key"></i>
+            <input type="text" id="eventCodeInput" placeholder="Enter event code (e.g., EVNT-ABC123)" style="text-transform: uppercase;" />
+          </div>
+          
+          <button onclick="joinEventByCode()" class="btn-primary" style="margin-top: 1rem; width: 100%;">
+            <i class="fas fa-sign-in-alt"></i> Join Event
+          </button>
+          
+          <div id="joinCodeResult" style="display: none; margin-top: 1rem; padding: 1rem; border-radius: 8px;">
+            <!-- Result will be displayed here -->
+          </div>
+        </div>
+      </div>
+
       <div class="dashboard-card full-width">
         <h3><i class="fas fa-search"></i> Find Events to Join</h3>
         
@@ -851,81 +805,90 @@
     </div>
 
     <!-- Create Event Tab -->
-    <div id="create-event" class="tab-content">
-      <div class="dashboard-card full-width">
-        <h3><i class="fas fa-plus-circle"></i> Create New Event</h3>
-        
-        <form id="createEventForm">
-          <div class="input-group">
-            <i class="fas fa-heading"></i>
-            <input type="text" id="eventTitle" placeholder="Event Title" required />
-          </div>
-          
-          <div class="input-group">
-            <i class="fas fa-align-left"></i>
-            <textarea id="eventDescription" placeholder="Event Description" rows="4" style="padding: 12px 15px 12px 45px; resize: vertical; font-family: 'Poppins', sans-serif;"></textarea>
-          </div>
-          
-          <div class="input-row">
-            <div class="input-group">
-              <i class="fas fa-calendar"></i>
-              <input type="date" id="eventDate" required />
-            </div>
-            
-            <div class="input-group">
-              <i class="fas fa-clock"></i>
-              <input type="time" id="eventTime" required />
-            </div>
-          </div>
-          
-          <div class="input-row">
-            <div class="input-group">
-              <i class="fas fa-map-marker-alt"></i>
-              <input type="text" id="eventLocation" placeholder="Event Location" required />
-            </div>
-            
-            <div class="input-group">
-              <i class="fas fa-users"></i>
-              <input type="number" id="maxParticipants" placeholder="Max Participants" min="1" />
-            </div>
-          </div>
-          
-          <div class="input-row">
-            <div class="input-group">
-              <i class="fas fa-tags"></i>
-              <select id="eventCategory" required>
-                <option value="" disabled selected>Select Category</option>
-                <option value="sports">🏃 Sports</option>
-                <option value="music">🎵 Music</option>
-                <option value="food">🍽️ Food</option>
-                <option value="travel">✈️ Travel</option>
-                <option value="business">💼 Business</option>
-                <option value="education">📚 Education</option>
-                <option value="social">👥 Social</option>
-              </select>
-            </div>
-            
-            <div class="input-group">
-              <i class="fas fa-dollar-sign"></i>
-              <input type="number" id="eventPrice" placeholder="Price (₹)" min="0" step="0.01" />
-            </div>
-          </div>
-          
-          <div class="checkbox-group" style="margin: 1rem 0;">
-            <label style="display: flex; align-items: center; gap: 0.5rem;">
-              <input type="checkbox" id="isPublicEvent" checked />
-              <span>Make this event public</span>
-            </label>
-          </div>
-          
-          <button type="submit" class="btn-primary" style="width: 100%;">
-            <i class="fas fa-plus"></i> Create Event
-          </button>
-        </form>
+<div id="create-event" class="tab-content">
+  <div class="dashboard-card full-width">
+    <h3><i class="fas fa-plus-circle"></i> Create New Event</h3>
+    
+    <form id="createEventForm">
+      <div class="input-group">
+        <i class="fas fa-heading"></i>
+        <input type="text" id="eventTitle" placeholder="Event Title" required />
+      </div>
+
+      <div class="input-group">
+        <i class="fas fa-align-left"></i>
+        <textarea id="eventDescription" placeholder="Event Description" rows="4" style="padding: 12px 15px 12px 45px; resize: vertical; font-family: 'Poppins', sans-serif;"></textarea>
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <i class="fas fa-calendar"></i>
+          <input type="date" id="eventDate" required />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-clock"></i>
+          <input type="time" id="eventTime" required />
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <i class="fas fa-map-marker-alt"></i>
+          <input type="text" id="eventLocation" placeholder="Event Location" required />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-users"></i>
+          <input type="number" id="maxParticipants" placeholder="Max Participants" min="1" />
+        </div>
+      </div>
+
+      <div class="input-row">
+        <div class="input-group">
+          <i class="fas fa-tags"></i>
+          <select id="eventCategory" required>
+            <option value="" disabled selected>Select Category</option>
+            <option value="sports">🏃 Sports</option>
+            <option value="music">🎵 Music</option>
+            <option value="food">🍽️ Food</option>
+            <option value="travel">✈️ Travel</option>
+            <option value="business">💼 Business</option>
+            <option value="education">📚 Education</option>
+            <option value="social">👥 Social</option>
+          </select>
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-dollar-sign"></i>
+          <input type="number" id="eventPrice" placeholder="Price (₹)" min="0" step="0.01" />
+        </div>
+      </div>
+
+      <div class="checkbox-group" style="margin: 1rem 0;">
+        <label style="display: flex; align-items: center; gap: 0.5rem;">
+          <input type="checkbox" id="isPublicEvent" checked />
+          <span>Make this event public</span>
+        </label>
+      </div>
+
+      <button type="submit" class="btn-primary" style="width: 100%;">
+        <i class="fas fa-plus"></i> Create Event
+      </button>
+    </form>
+
+    <!-- Event Code Output -->
+    <div id="eventCodeContainer" style="display: none; margin-top: 20px;">
+      <p>Your event has been created! 🎉</p>
+      <div style="display: flex; align-items: center;">
+        <input type="text" id="eventCode" readonly style="padding: 8px; margin-right: 10px; border: 1px solid #ccc;" />
+        <button onclick="copyEventCode()" type="button">Copy Code</button>
       </div>
     </div>
 
   </div>
+</div>
+
 
   <!-- Event Modal -->
   <div id="eventModal" class="modal-overlay" style="display: none;">
@@ -981,6 +944,10 @@
         loadUserProfile();
         setupEventListeners();
         initializeMap();
+        initializeSampleData(); // Add sample events if none exist
+        // Load events for the default active tab
+        loadMyEvents();
+        loadAvailableEvents();
       } catch (error) {
         console.error('Initialization error:', error);
         showNotification('Failed to initialize application', 'error');
@@ -1630,8 +1597,11 @@
     function handleCreateEvent(e) {
       e.preventDefault();
       
+      const eventId = generateEventId();
+      const eventCode = generateEventCode();
+      
       const formData = {
-        id: generateEventId(),
+        id: eventId,
         title: document.getElementById('eventTitle').value,
         description: document.getElementById('eventDescription').value,
         date: document.getElementById('eventDate').value,
@@ -1643,8 +1613,14 @@
         isPublic: document.getElementById('isPublicEvent').checked,
         organizer: currentUser.username,
         participants: [currentUser.username],
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        code: eventCode
       };
+      
+      // Store event code mapping
+      const eventCodes = JSON.parse(localStorage.getItem('eventCodes') || '{}');
+      eventCodes[eventCode] = eventId;
+      localStorage.setItem('eventCodes', JSON.stringify(eventCodes));
       
       // Add to user events
       userEvents.push(formData);
@@ -1658,6 +1634,12 @@
       localStorage.setItem('userEvents', JSON.stringify(userEvents));
       localStorage.setItem('availableEvents', JSON.stringify(availableEvents));
       
+      // Show event code to user
+      const eventCodeContainer = document.getElementById('eventCodeContainer');
+      const eventCodeInput = document.getElementById('eventCode');
+      eventCodeInput.value = eventCode;
+      eventCodeContainer.style.display = 'block';
+      
       // Reset form
       document.getElementById('createEventForm').reset();
       
@@ -1668,6 +1650,82 @@
       switchTabProgrammatically('my-events');
       
       showNotification('Event created successfully!', 'success');
+    }
+
+    // Generate Event Code
+    function generateEventCode() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = 'EVNT-';
+      for (let i = 0; i < 6; i++) {
+        code += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return code;
+    }
+
+    // Initialize Sample Data if needed
+    function initializeSampleData() {
+      // Check if there are any available events, if not add some samples
+      const savedAvailableEvents = localStorage.getItem('availableEvents');
+      if (!savedAvailableEvents || JSON.parse(savedAvailableEvents).length === 0) {
+        const sampleEvents = [
+          {
+            id: 'event_sample_1',
+            title: 'City Food Festival',
+            description: 'Join us for a fantastic food festival featuring local vendors and live music.',
+            date: '2025-08-25',
+            time: '18:00',
+            location: 'Central Park, Delhi',
+            organizer: 'FoodieEvents',
+            code: 'EVNT-FD2025',
+            maxParticipants: 100,
+            currentParticipants: 23,
+            price: 'Free',
+            category: 'food',
+            participants: ['FoodieEvents', 'user1', 'user2']
+          },
+          {
+            id: 'event_sample_2', 
+            title: 'Tech Meetup 2025',
+            description: 'Network with fellow developers and learn about the latest tech trends.',
+            date: '2025-08-28',
+            time: '19:00',
+            location: 'Tech Hub, Bangalore',
+            organizer: 'TechCommunity',
+            code: 'EVNT-TC2025',
+            maxParticipants: 50,
+            currentParticipants: 12,
+            price: '500',
+            category: 'business',
+            participants: ['TechCommunity', 'dev1', 'dev2']
+          },
+          {
+            id: 'event_sample_3',
+            title: 'Morning Yoga Session',
+            description: 'Start your day with peaceful yoga by the lake. All levels welcome.',
+            date: '2025-08-22',
+            time: '07:00',
+            location: 'Lakeview Park, Mumbai',
+            organizer: 'WellnessEvents',
+            code: 'EVNT-YG2025',
+            maxParticipants: 30,
+            currentParticipants: 8,
+            price: '200',
+            category: 'sports',
+            participants: ['WellnessEvents', 'yogi1']
+          }
+        ];
+        
+        // Store event codes mapping
+        const eventCodes = {
+          'EVNT-FD2025': 'event_sample_1',
+          'EVNT-TC2025': 'event_sample_2',
+          'EVNT-YG2025': 'event_sample_3'
+        };
+        
+        localStorage.setItem('availableEvents', JSON.stringify(sampleEvents));
+        localStorage.setItem('eventCodes', JSON.stringify(eventCodes));
+        availableEvents = sampleEvents;
+      }
     }
 
     // Load My Events
@@ -2539,39 +2597,7 @@
   </script>
 </body>
 </html>
-          <div class="input-group">
-            <i class="fas fa-play-circle"></i>
-            <input type="text" id="start" placeholder="Enter start location" required />
-            <button type="button" id="useCurrentStart" class="btn-secondary" style="position: absolute; right: 5px; top: 5px; padding: 8px;">
-              <i class="fas fa-crosshairs"></i>
-            </button>
-          </div>
-          
-          <div class="input-group">
-            <i class="fas fa-flag-checkered"></i>
-            <input type="text" id="end" placeholder="Enter destination" required />
-          </div>
-          
-          <div class="input-row">
-            <div class="input-group">
-              <i class="fas fa-clock"></i>
-              <input type="datetime-local" id="time" required />
-            </div>
-            
-            <div class="input-group">
-              <i class="fas fa-car"></i>
-              <select id="transport">
-                <option value="" disabled selected>Select transport</option>
-                <option value="bus">🚌 Bus</option>
-                <option value="bike">🚴 Bike</option>
-                <option value="walk">🚶 Walk</option>
-                <option value="car">🚗 Car</option>
-                <option value="metro">🚇 Metro</option>
-                <option value="train">🚆 Train</option>
-                <option value="auto">🛺 Auto</option>
-              </select>
-            </div>
-
+ 
   <!-- Loading Overlay -->
   <div id="loadingOverlay" class="loading-overlay">
     <div class="loading-spinner">
@@ -2579,18 +2605,318 @@
       <p>Processing your request...</p>
     </div>
   </div>
+  
+  
+  <div class="location-toggle">
+  <span><i class="fas fa-map-marker-alt"></i> Live Location Sharing</span>
+  <label style="display:flex;align-items:center;gap:8px;">
+    <input type="checkbox" id="liveLocationSwitch" class="toggle-checkbox" />
+    <span id="liveLocationStatus" class="location-status-indicator" style="display:none;">
+      <span class="status-dot online"></span> Sharing live
+    </span>
+  </label>
+</div>
+<div id="liveLocationError" style="color:#f56565; font-size:0.95rem; margin-top:4px; display:none;"></div>
+<div id="liveLocationMap" style="height:220px; margin-top:1rem; display:none;"></div>
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
   
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-  
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-  </script>
+  <script>
+  // Enhanced Create Event Form Handler
+  document.getElementById('createEventForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Gather all form data
+    const title = document.getElementById('eventTitle').value;
+    const description = document.getElementById('eventDescription').value;
+    const date = document.getElementById('eventDate').value;
+    const time = document.getElementById('eventTime').value;
+    const location = document.getElementById('eventLocation').value;
+    const maxParticipants = document.getElementById('maxParticipants').value || 'Unlimited';
+    const category = document.getElementById('eventCategory').value;
+    const price = document.getElementById('eventPrice').value || 'Free';
+    const isPublic = document.getElementById('isPublicEvent').checked;
+
+    // Validate required fields
+    if (!title || !description || !date || !time || !location || !category) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    // Generate unique event code
+    const eventCode = 'EVNT-' + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+    // Create event object
+    const eventData = {
+      id: 'event_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+      code: eventCode,
+      title: title,
+      description: description,
+      date: date,
+      time: time,
+      location: location,
+      maxParticipants: maxParticipants,
+      category: category,
+      price: price === 'Free' ? 'Free' : '₹' + price,
+      isPublic: isPublic,
+      organizer: currentUser ? currentUser.username : 'Anonymous',
+      participants: [currentUser ? currentUser.username : 'Anonymous'],
+      createdAt: new Date().toISOString()
+    };
+
+    // Store event in localStorage
+    let userEvents = JSON.parse(localStorage.getItem('userEvents') || '[]');
+    let availableEvents = JSON.parse(localStorage.getItem('availableEvents') || '[]');
+    let eventCodes = JSON.parse(localStorage.getItem('eventCodes') || '{}');
+
+    // Add event to arrays
+    userEvents.push(eventData);
+    if (isPublic) {
+      availableEvents.push(eventData);
+    }
+    
+    // Store event code mapping
+    eventCodes[eventCode] = eventData.id;
+
+    // Save to localStorage
+    localStorage.setItem('userEvents', JSON.stringify(userEvents));
+    localStorage.setItem('availableEvents', JSON.stringify(availableEvents));
+    localStorage.setItem('eventCodes', JSON.stringify(eventCodes));
+
+    // Show code in UI
+    document.getElementById('eventCode').value = eventCode;
+    document.getElementById('eventCodeContainer').style.display = 'block';
+
+    // Show success message
+    showNotification('Event created successfully! Share your event code with others.', 'success');
+
+    // Update stats if function exists
+    if (typeof updateUserStats === 'function') {
+      updateUserStats();
+    }
+  });
+
+  function copyEventCode() {
+    const input = document.getElementById('eventCode');
+    input.select();
+    input.setSelectionRange(0, 99999);
+    
+    // Use modern clipboard API if available, fallback to execCommand
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(input.value).then(() => {
+        showNotification('Event code copied: ' + input.value, 'success');
+      }).catch(() => {
+        document.execCommand('copy');
+        showNotification('Event code copied: ' + input.value, 'success');
+      });
+    } else {
+      document.execCommand('copy');
+      showNotification('Event code copied: ' + input.value, 'success');
+    }
+  }
+
+  // Join Event by Code Function
+  function joinEventByCode() {
+    const codeInput = document.getElementById('eventCodeInput');
+    const resultDiv = document.getElementById('joinCodeResult');
+    const eventCode = codeInput.value.trim().toUpperCase();
+
+    if (!eventCode) {
+      showNotification('Please enter an event code', 'error');
+      return;
+    }
+
+    // Get event codes mapping
+    const eventCodes = JSON.parse(localStorage.getItem('eventCodes') || '{}');
+    const availableEvents = JSON.parse(localStorage.getItem('availableEvents') || '[]');
+    const userEvents = JSON.parse(localStorage.getItem('userEvents') || '[]');
+
+    // Find event by code
+    const eventId = eventCodes[eventCode];
+    let event = null;
+
+    if (eventId) {
+      // Search in available events first
+      event = availableEvents.find(e => e.id === eventId);
+      if (!event) {
+        // Search in user events
+        event = userEvents.find(e => e.id === eventId);
+      }
+    }
+
+    if (!event) {
+      resultDiv.style.display = 'block';
+      resultDiv.style.backgroundColor = '#f8d7da';
+      resultDiv.style.color = '#721c24';
+      resultDiv.style.border = '1px solid #f5c6cb';
+      resultDiv.innerHTML = `
+        <div style="text-align: center;">
+          <i class="fas fa-times-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+          <p><strong>Event Not Found</strong></p>
+          <p>The event code "${eventCode}" is invalid or the event no longer exists.</p>
+        </div>
+      `;
+      showNotification('Invalid event code', 'error');
+      return;
+    }
+
+    // Check if user is already a participant
+    const currentUsername = currentUser ? currentUser.username : 'Anonymous';
+    const isAlreadyJoined = event.participants && event.participants.includes(currentUsername);
+
+    if (isAlreadyJoined) {
+      resultDiv.style.display = 'block';
+      resultDiv.style.backgroundColor = '#fff3cd';
+      resultDiv.style.color = '#856404';
+      resultDiv.style.border = '1px solid #ffeaa7';
+      resultDiv.innerHTML = `
+        <div style="text-align: center;">
+          <i class="fas fa-info-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+          <p><strong>Already Joined</strong></p>
+          <p>You are already a participant in "${event.title}"</p>
+        </div>
+      `;
+      showNotification('You have already joined this event', 'info');
+      return;
+    }
+
+    // Check if event is full
+    if (event.maxParticipants !== 'Unlimited' && 
+        event.participants && 
+        event.participants.length >= parseInt(event.maxParticipants)) {
+      resultDiv.style.display = 'block';
+      resultDiv.style.backgroundColor = '#f8d7da';
+      resultDiv.style.color = '#721c24';
+      resultDiv.style.border = '1px solid #f5c6cb';
+      resultDiv.innerHTML = `
+        <div style="text-align: center;">
+          <i class="fas fa-users-slash" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+          <p><strong>Event Full</strong></p>
+          <p>This event has reached its maximum capacity of ${event.maxParticipants} participants.</p>
+        </div>
+      `;
+      showNotification('Event is full', 'error');
+      return;
+    }
+
+    // Add user to event participants
+    if (!event.participants) {
+      event.participants = [];
+    }
+    event.participants.push(currentUsername);
+
+    // Update localStorage
+    const eventIndex = availableEvents.findIndex(e => e.id === eventId);
+    if (eventIndex !== -1) {
+      availableEvents[eventIndex] = event;
+      localStorage.setItem('availableEvents', JSON.stringify(availableEvents));
+    }
+
+    // Show success
+    const categoryEmoji = {
+      sports: '🏃', music: '🎵', food: '🍽️', travel: '✈️',
+      business: '💼', education: '📚', social: '👥'
+    };
+
+    resultDiv.style.display = 'block';
+    resultDiv.style.backgroundColor = '#d4edda';
+    resultDiv.style.color = '#155724';
+    resultDiv.style.border = '1px solid #c3e6cb';
+    resultDiv.innerHTML = `
+      <div style="text-align: center;">
+        <i class="fas fa-check-circle" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+        <p><strong>Successfully Joined!</strong></p>
+        <div style="background: white; padding: 1rem; border-radius: 8px; margin-top: 1rem; text-align: left;">
+          <h4>${event.title} ${categoryEmoji[event.category] || '📅'}</h4>
+          <p style="margin: 0.5rem 0; color: #666;">${event.description}</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; font-size: 0.9rem;">
+            <div><i class="fas fa-calendar"></i> ${new Date(event.date).toLocaleDateString()}</div>
+            <div><i class="fas fa-clock"></i> ${event.time}</div>
+            <div><i class="fas fa-map-marker-alt"></i> ${event.location}</div>
+            <div><i class="fas fa-tag"></i> ${event.category}</div>
+          </div>
+          <div style="margin-top: 0.5rem;">
+            <div><i class="fas fa-users"></i> ${event.participants.length}/${event.maxParticipants === 'Unlimited' ? '∞' : event.maxParticipants} participants</div>
+            <div><i class="fas fa-dollar-sign"></i> ${event.price}</div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    showNotification('Successfully joined the event!', 'success');
+    codeInput.value = '';
+  }
+
+  // Auto-uppercase event code input
+  document.getElementById('eventCodeInput').addEventListener('input', function() {
+    this.value = this.value.toUpperCase();
+  });
+
+  // Helper function for notifications (fallback if not defined elsewhere)
+  function showNotification(message, type = 'info') {
+    if (typeof window.showNotification === 'function') {
+      window.showNotification(message, type);
+      return;
+    }
+    
+    // Simple fallback notification
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 500;
+      z-index: 1000;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+    `;
+    notification.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'}"></i> ${message}`;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => notification.style.transform = 'translateX(0)', 100);
+    setTimeout(() => {
+      notification.style.transform = 'translateX(100%)';
+      setTimeout(() => document.body.removeChild(notification), 300);
+    }, 3000);
+  }
+</script>
+
+<!-- Floating Chatbot Toggle Button -->
+<button id="chatbotToggle" class="btn-primary" style="position: fixed; bottom: 30px; right: 30px; z-index: 1000;">
+  💬 Ask Routify
+</button>
+
+<!-- Chatbot Popup Box -->
+<div id="chatbotBox" style="display: none; position: fixed; bottom: 90px; right: 30px; width: 300px; height: 400px; background: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.2); border-radius: 12px; overflow: hidden; z-index: 999;">
+  <div style="background: #4b7bec; color: #fff; padding: 10px; font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
+    <span>Routify Bot</span>
+    <button id="closeChatbot" style="background: transparent; color: #fff; border: none; font-size: 16px; cursor: pointer;">✖</button>
+  </div>
+  <iframe src="chatbot.html" width="100%" height="100%" style="border: none;"></iframe>
+</div>
+
+<!-- Script (MUST be after HTML) -->
+<script>
+  const toggleBtn = document.getElementById("chatbotToggle");
+  const chatbotBox = document.getElementById("chatbotBox");
+  const closeBtn = document.getElementById("closeChatbot");
+
+  toggleBtn.addEventListener("click", () => {
+    chatbotBox.style.display = "block";
+  });
+
+  closeBtn.addEventListener("click", () => {
+    chatbotBox.style.display = "none";
+  });
+</script>
+
+
 </body>
 </html>

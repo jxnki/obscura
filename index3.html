@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+   <link rel="stylesheet" href="style2.css" />
+</head>
+<body>
+  <header>
+    <h1>🧭 Routify</h1>
+    <nav>
+      <a href="#" onclick="showPage('create')">Create Event</a>
+      <a href="#" onclick="showPage('join')">Join Event</a>
+    </nav>
+  </header>
+
+  <section id="create" class="active">
+    <h2>🗓️ Create Event</h2>
+    <p class="section-desc">Create a new event and get a unique code to share with others.</p>
+    <form id="create-form">
+      <div class="form-group">
+        <label for="title">Event Title</label>
+        <input type="text" id="title" placeholder="Enter a descriptive title" required />
+      </div>
+      <div class="form-group">
+        <label for="date">Event Date</label>
+        <input type="date" id="date" required />
+      </div>
+      <div class="form-group">
+        <label for="time">Event Time</label>
+        <input type="time" id="time" required />
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Create Event</button>
+      </div>
+    </form>
+    <div id="create-feedback" class="feedback"></div>
+  </section>
+
+  <section id="join">
+    <h2>🚏 Join Event</h2>
+    <div class="join-options">
+      <div class="join-section">
+        <h3>🗺️ Plan a Route</h3>
+        <p class="section-desc">Enter your start and end destinations</p>
+        <form id="route-form">
+          <div class="form-group">
+            <label for="start">Start Location</label>
+            <input type="text" id="start" placeholder="Enter starting point" required />
+          </div>
+          <div class="form-group">
+            <label for="end">End Location</label>
+            <input type="text" id="end" placeholder="Enter destination" required />
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Find Matches</button>
+          </div>
+        </form>
+        <div id="route-feedback" class="feedback"></div>
+        <div id="matching-routes" class="route-matches">
+          <!-- Matching routes will be displayed here -->
+        </div>
+      </div>
+
+      <div class="join-section">
+        <h3>🎟️ Join with Code</h3>
+        <p class="section-desc">Enter a referral code to join an existing room</p>
+        <form id="join-form">
+          <div class="form-group">
+            <label for="code">Event Code</label>
+            <input type="text" id="code" placeholder="Enter the 7-digit code (e.g., EVT1234)" required pattern="EVT[0-9]{4}" />
+            <small class="input-help">The code should start with 'EVT' followed by 4 numbers</small>
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Join Event</button>
+          </div>
+        </form>
+        <div id="join-feedback" class="feedback"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+  <script src="createEvent.js"></script>
+  <script src="joinEvent.js"></script>
+</body>
+</html>
