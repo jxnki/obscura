@@ -16,6 +16,7 @@
       min-height: 100vh;
     }
 
+
     .chat-container {
       width: 90%;
       max-width: 500px;
@@ -27,6 +28,7 @@
       flex-direction: column;
     }
 
+
     .chat-header {
       background-color: #f29c47;
       color: white;
@@ -36,6 +38,7 @@
       font-weight: 600;
     }
 
+
     .chatbox {
       flex-grow: 1;
       overflow-y: auto;
@@ -43,6 +46,7 @@
       display: flex;
       flex-direction: column;
     }
+
 
     .chat-message {
       padding: 12px 18px;
@@ -53,23 +57,72 @@
       line-height: 1.6;
     }
 
+
     .user-message {
       background-color: #f6a249;
       align-self: flex-end;
       color: #333;
     }
 
+
     .bot-message {
       background-color: #d5f5dc;
       align-self: flex-start;
       color: #333;
+      white-space: pre-line;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+
+
+    .info-block {
+      background: #fff;
+      border-left: 4px solid #4299e1;
+      padding: 8px 12px;
+      margin: 8px 0;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+
+    .info-block-title {
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 4px;
+    }
+
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0;
+    }
+
+
+    .time-block {
+      background: #ebf8ff;
+      border-radius: 4px;
+      padding: 6px 10px;
+      margin: 4px 0;
+      font-weight: 500;
+    }
+
+
+    .important-note {
+      background: #fff3ea;
+      border-left: 4px solid #ed8936;
+      padding: 8px 12px;
+      margin: 8px 0;
+      border-radius: 4px;
+    }
+
 
     .input-container {
       display: flex;
       padding: 15px;
       border-top: 1px solid #eee;
     }
+
 
     input {
       flex-grow: 1;
@@ -79,6 +132,7 @@
       font-size: 16px;
       margin-right: 10px;
     }
+
 
     button {
       padding: 12px 20px;
@@ -91,9 +145,11 @@
       transition: background-color 0.3s ease;
     }
 
+
     button:hover {
       background: #035f03;
     }
+
 
     .journey-form {
       padding: 20px;
@@ -103,10 +159,12 @@
       gap: 10px;
     }
 
+
     .journey-form input {
       width: 100%;
       margin-bottom: 10px;
     }
+
 
     .reminder {
       background-color: #ffe0b2;
@@ -117,11 +175,13 @@
     }
   </style>
 
+
   <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
 </head>
+
 
 <body>
   <div class="chat-container">
@@ -130,6 +190,14 @@
       <input type="text" id="startLocation" placeholder="Start Location" />
       <input type="text" id="endLocation" placeholder="Destination" />
       <input type="text" id="purpose" placeholder="Purpose of Journey (e.g., Hospital Visit)" />
+      <select id="transportMode" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 25px; font-size: 16px; margin-bottom: 10px;">
+        <option value="" disabled selected>Select Mode of Transport</option>
+        <option value="driving">🚗 Driving</option>
+        <option value="public-transport">🚌 Public Transport</option>
+        <option value="walking">🚶‍♂️ Walking</option>
+        <option value="cycling">🚲 Cycling</option>
+        <option value="taxi">🚕 Taxi/Ride-sharing</option>
+      </select>
       <input type="datetime-local" id="journeyTime" />
       <button onclick="planJourney()">Plan Journey</button>
     </div>
@@ -140,6 +208,7 @@
     </div>
   </div>
 
+
   <script>
     let firebaseConfig;
     let conversationHistory = [];
@@ -147,15 +216,18 @@
     let currentJourneyPlan = null;
     let reminderTimeout;
 
+
     async function fetchConfigs() {
       try {
         const firebaseResponse = await fetch('https://routify-4fza.onrender.com/firebaseconfig');
         if (!firebaseResponse.ok) throw new Error(`HTTP error! status: ${firebaseResponse.status}`);
         firebaseConfig = await firebaseResponse.json();
 
+
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
+
 
         auth.onAuthStateChanged(async (currentUser) => {
           user = currentUser;
@@ -167,6 +239,7 @@
           }
         });
 
+
         function loadLocalStorageHistory() {
           const chatbox = document.getElementById("chatbox");
           chatbox.innerHTML = "";
@@ -174,11 +247,13 @@
           renderChat(conversationHistory);
         }
 
+
         async function loadChatHistory() {
           if (!user) return;
           const chatbox = document.getElementById("chatbox");
           chatbox.innerHTML = "";
           conversationHistory = [];
+
 
           try {
             const chatDoc = await db.collection("chats").doc(user.uid).get();
@@ -192,6 +267,7 @@
           }
         }
 
+
         function renderChat(history) {
           const chatbox = document.getElementById("chatbox");
           chatbox.innerHTML = "";
@@ -203,13 +279,16 @@
           chatbox.scrollTop = chatbox.scrollHeight;
         }
 
+
         window.sendMessage = async function () {
           let userMessage = document.getElementById("userInput").value.trim();
           if (!userMessage) return;
 
+
           const chatbox = document.getElementById("chatbox");
           chatbox.innerHTML += `<div class="chat-message user-message"><b>You:</b> ${userMessage}</div>`;
           document.getElementById("userInput").value = "";
+
 
           conversationHistory.push({ role: "user", parts: [{ text: userMessage }] });
           try {
@@ -221,13 +300,17 @@
         })
         });
 
+
         if (!response.ok) throw new Error("Bad response from server");
+
 
         const data = await response.json();
             const botReply = data?.reply || "I'm sorry, I don't understand.";
 
+
             chatbox.innerHTML += `<div class="chat-message bot-message"><b>Bot:</b> ${botReply}</div>`;
             conversationHistory.push({ role: "model", parts: [{ text: botReply }] });
+
 
             if (user) {
               await db.collection("chats").doc(user.uid).set({ history: conversationHistory });
@@ -235,12 +318,14 @@
               localStorage.setItem('chatHistory', JSON.stringify(conversationHistory));
             }
 
+
             chatbox.scrollTop = chatbox.scrollHeight;
           } catch (error) {
             console.error("Error:", error);
             chatbox.innerHTML += `<div class="chat-message bot-message"><b>Bot:</b> Oops! Something went wrong.</div>`;
           }
         }
+
 
         async function transferLocalStorageToFirestore() {
           if (!user) return;
@@ -255,45 +340,92 @@
           }
         }
 
+
       } catch (error) {
         console.error('Error fetching configs:', error);
         alert('Failed to load. Please try again later.');
       }
     }
 
+
     window.planJourney = async function() {
       const startLocation = document.getElementById("startLocation").value.trim();
       const endLocation = document.getElementById("endLocation").value.trim();
       const purpose = document.getElementById("purpose").value.trim();
+      const transportMode = document.getElementById("transportMode").value;
       const journeyTime = document.getElementById("journeyTime").value;
 
-      if (!startLocation || !endLocation || !purpose || !journeyTime) {
-        alert("Please fill in all journey details");
+
+      if (!startLocation || !endLocation || !purpose || !transportMode || !journeyTime) {
+        alert("Please fill in all journey details including mode of transport");
         return;
       }
 
+
       const chatbox = document.getElementById("chatbox");
-      const journeyDetails = `Planning journey from ${startLocation} to ${endLocation} for ${purpose} at ${new Date(journeyTime).toLocaleString()}`;
-      
+      const journeyDetails = `Planning journey from ${startLocation} to ${endLocation} via ${transportMode} for ${purpose} at ${new Date(journeyTime).toLocaleString()}`;
+     
       chatbox.innerHTML += `<div class="chat-message user-message"><b>You:</b> ${journeyDetails}</div>`;
+
 
       try {
         const response = await fetch('https://routify-4fza.onrender.com/gpt4o', {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            message: `Plan a journey with these details: ${journeyDetails}. Please provide:
-            1. Estimated journey duration
-            2. A detailed timeline of what to do and when
-            3. Essential items to pack based on the purpose (${purpose})
-            4. ADHD-friendly reminders and tips`
+            message: `Plan this journey: ${journeyDetails}
+
+
+Please format the response using this template:
+
+
+🚗 Trip Details
+-------------------
+From: ${startLocation}
+To: ${endLocation}
+Via: ${transportMode}
+For: ${purpose}
+When: ${new Date(journeyTime).toLocaleString()}
+
+
+⏰ Timing
+-------------------
+• Journey Duration: [estimated time]
+• Departure Time: [recommended time]
+• Arrival Time: [expected arrival]
+
+
+📋 Quick Checklist
+-------------------
+Essential Items:
+▢ Wallet & ID
+▢ Phone & Charger
+▢ Keys
+▢ [Add purpose-specific items]
+
+
+🗺️ Journey Notes
+-------------------
+• Transport Info: [relevant info based on mode]
+• Key Reminders: [important points]
+• Backup Plan: [alternative option]
+
+
+⚠️ Important
+-------------------
+• Weather: [forecast]
+• Set Alarms: [key timings]
+• Emergency: [backup contact/plan]`
           })
         });
 
+
         if (!response.ok) throw new Error("Bad response from server");
+
 
         const data = await response.json();
         const plan = data?.reply || "I'm sorry, I couldn't create a journey plan.";
+
 
         currentJourneyPlan = {
           startLocation,
@@ -303,22 +435,23 @@
           plan
         };
 
+
         chatbox.innerHTML += `<div class="chat-message bot-message"><b>Bot:</b> ${plan}</div>`;
-        
+       
         // Set reminder for 15 minutes before journey
         const reminderTime = new Date(journeyTime);
         reminderTime.setMinutes(reminderTime.getMinutes() - 15);
-        
+       
         clearTimeout(reminderTimeout);
         const timeUntilReminder = reminderTime - new Date();
-        
+       
         if (timeUntilReminder > 0) {
           reminderTimeout = setTimeout(() => {
             const reminder = document.createElement('div');
             reminder.className = 'reminder';
             reminder.innerHTML = `⏰ Your journey to ${endLocation} starts in 15 minutes! Don't forget your essentials!`;
             chatbox.appendChild(reminder);
-            
+           
             // Attempt to show a browser notification
             if (Notification.permission === "granted") {
               new Notification("Journey Reminder", {
@@ -329,17 +462,20 @@
           }, timeUntilReminder);
         }
 
+
         // Save to conversation history
         conversationHistory.push(
           { role: "user", parts: [{ text: journeyDetails }] },
           { role: "model", parts: [{ text: plan }] }
         );
 
+
         if (user) {
           await db.collection("chats").doc(user.uid).set({ history: conversationHistory });
         } else {
           localStorage.setItem('chatHistory', JSON.stringify(conversationHistory));
         }
+
 
         chatbox.scrollTop = chatbox.scrollHeight;
       } catch (error) {
@@ -348,12 +484,15 @@
       }
     };
 
+
     // Request notification permission
     if ("Notification" in window) {
       Notification.requestPermission();
     }
 
+
     fetchConfigs();
   </script>
 </body>
 </html>
+
