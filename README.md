@@ -1,7 +1,5 @@
 # 🚀 Routify - Smart Travel Planner
 
-## Part C: Route Input + Map + Matching
-
 A smart, privacy-focused, social travel planner for students & local commuters.
 
 ### 🛠️ Tech Stack

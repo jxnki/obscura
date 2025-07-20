@@ -590,11 +590,13 @@
       <div class="dashboard-card full-width">
         
         <div class="quick-actions" style="margin-bottom: 1rem;">
-        <button onclick="window.location.href='route.html'" class="btn-primary">
+        <button onclick="window.location.href='route.html'" class="btn-primary" style="padding: 20px 40px; font-size: 1.2em;">
             <i class="fas fa-route"></i> Find Route
           </button>
        
-        
+        <button onclick="window.location.href='friends.html'" class="btn-primary" style="padding: 20px 40px; font-size: 1.2em;">
+            <i class="fas fa-route"></i> Connect with Friends
+          </button>
         <!-- Route Information -->
         <div id="routeInfo" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
           <h4>Route Information</h4>
@@ -1325,6 +1327,18 @@
       
       // Load user stats
       updateUserStats();
+      
+      // Listen for changes to friends list in localStorage
+      window.addEventListener('storage', function(e) {
+        if (e.key && e.key.startsWith('friends_') && currentUser && e.key === `friends_${currentUser.email}`) {
+          updateUserStats();
+        }
+      });
+      
+      // Also listen for custom events from friends page
+      window.addEventListener('friendsUpdated', function() {
+        updateUserStats();
+      });
     }
 
     // Setup Location Sharing
@@ -1549,8 +1563,14 @@
     // Update User Stats
     function updateUserStats() {
       const myRoutesCount = userEvents.length; // keeping userEvents array name for compatibility
-      const followersCount = 0; // Will be populated when users actually follow
-      const followingCount = 0; // Will be populated when users actually follow
+      
+      // Get actual friend count from localStorage
+      let followersCount = 0;
+      if (currentUser && currentUser.email) {
+        const friends = localStorage.getItem(`friends_${currentUser.email}`);
+        followersCount = friends ? JSON.parse(friends).length : 0;
+      }
+      const followingCount = followersCount; // In this context, friends are mutual followers
 
       document.getElementById('myRoutesCount').textContent = myRoutesCount;
       document.getElementById('followersCount').textContent = followersCount;
@@ -2606,16 +2626,7 @@
     </div>
   </div>
   
-  
-  <div class="location-toggle">
-  <span><i class="fas fa-map-marker-alt"></i> Live Location Sharing</span>
-  <label style="display:flex;align-items:center;gap:8px;">
-    <input type="checkbox" id="liveLocationSwitch" class="toggle-checkbox" />
-    <span id="liveLocationStatus" class="location-status-indicator" style="display:none;">
-      <span class="status-dot online"></span> Sharing live
-    </span>
-  </label>
-</div>
+
 <div id="liveLocationError" style="color:#f56565; font-size:0.95rem; margin-top:4px; display:none;"></div>
 <div id="liveLocationMap" style="height:220px; margin-top:1rem; display:none;"></div>
 

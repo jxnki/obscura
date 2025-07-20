@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Friend Zone | Routify</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 2rem;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .back-button {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      margin-bottom: 2rem;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: translateY(-1px);
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      padding: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .card h2 {
+      color: #333;
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .input-group {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    input[type="email"] {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border-radius: 15px;
+      border: 2px solid #e1e5e9;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    input[type="email"]:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .friends-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .friend-item {
+      background: #f8f9fa;
+      margin-bottom: 1rem;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 1px solid #e1e5e9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .friend-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .friend-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .friend-avatar {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+    }
+
+    .friend-details h4 {
+      margin: 0;
+      color: #333;
+      font-size: 1.1rem;
+    }
+
+    .friend-details p {
+      margin: 0;
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .friend-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .btn-danger {
+      background: #dc3545;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn-danger:hover {
+      background: #c82333;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: #666;
+    }
+
+    .empty-state i {
+      font-size: 4rem;
+      color: #ccc;
+      margin-bottom: 1rem;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      color: white;
+      font-weight: 500;
+      z-index: 1001;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .notification.show {
+      transform: translateX(0);
+    }
+
+    .notification.success {
+      background: #28a745;
+    }
+
+    .notification.error {
+      background: #dc3545;
+    }
+
+    .notification.info {
+      background: #17a2b8;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding: 1rem;
+      }
+
+      .input-group {
+        flex-direction: column;
+      }
+
+      .friend-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .friend-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="dashboard.html" class="back-button">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+
+    <div class="card">
+      <h2><i class="fas fa-user-friends"></i> Friend Zone</h2>
+      <p>Add friends by entering their email address. They'll receive a friend request!</p>
+
+      <div class="input-group">
+        <input type="email" id="friendEmailInput" placeholder="Enter friend's email (e.g., john@example.com)" />
+        <button class="btn-primary" onclick="sendFriendRequest()">
+          <i class="fas fa-user-plus"></i> Send Request
+        </button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3><i class="fas fa-users"></i> Your Friends:</h3>
+      <ul id="friendList" class="friends-list">
+        <li class="friend-item">
+          <div class="empty-state">
+            <i class="fas fa-user-friends"></i>
+            <p>Loading friends...</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3><i class="fas fa-envelope"></i> Friend Requests:</h3>
+      <ul id="requestList" class="friends-list">
+        <li class="friend-item">
+          <div class="empty-state">
+            <i class="fas fa-inbox"></i>
+            <p>No pending requests</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    let currentUser = null;
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      checkAuthentication();
+      initFriendSystem();
+    });
+
+    // Check Authentication
+    function checkAuthentication() {
+      const userData = localStorage.getItem('routify_user');
+      
+      if (!userData) {
+        showNotification('Please log in first', 'error');
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 2000);
+        return;
+      }
+      
+      try {
+        const user = JSON.parse(userData);
+        if (!user.loggedIn) {
+          localStorage.removeItem('routify_user');
+          window.location.href = 'login.html';
+          return;
+        }
+        
+        currentUser = user;
+        console.log('Current user:', currentUser);
+      } catch (error) {
+        localStorage.removeItem('routify_user');
+        window.location.href = 'login.html';
+      }
+    }
+
+    function initFriendSystem() {
+      if (!currentUser) return;
+      loadFriends();
+      loadFriendRequests();
+    }
+
+    // Send Friend Request
+    function sendFriendRequest() {
+      const email = document.getElementById('friendEmailInput').value.trim();
+      
+      if (!email) {
+        showNotification('Please enter an email address', 'error');
+        return;
+      }
+
+      // Validate email format
+      if (!isValidEmail(email)) {
+        showNotification('Please enter a valid email address', 'error');
+        return;
+      }
+
+      if (email === currentUser.email) {
+        showNotification("You can't add yourself as a friend!", 'error');
+        return;
+      }
+
+      // Check if user exists (simulate by checking if email is valid)
+      if (!isRegisteredEmail(email)) {
+        showNotification('User not found with this email address', 'error');
+        return;
+      }
+
+      // Check if already friends
+      const friends = getFriends();
+      if (friends.some(friend => friend.email === email)) {
+        showNotification('Already friends with this user', 'info');
+        return;
+      }
+
+      // Check if request already sent
+      const sentRequests = getSentRequests();
+      if (sentRequests.includes(email)) {
+        showNotification('Friend request already sent', 'info');
+        return;
+      }
+
+      // Add to sent requests
+      sentRequests.push(email);
+      localStorage.setItem(`sentRequests_${currentUser.email}`, JSON.stringify(sentRequests));
+
+      // Add to their received requests (simulate)
+      const theirRequests = getReceivedRequests(email);
+      theirRequests.push(currentUser.email);
+      localStorage.setItem(`receivedRequests_${email}`, JSON.stringify(theirRequests));
+
+      showNotification(`Friend request sent to ${email}!`, 'success');
+      document.getElementById('friendEmailInput').value = '';
+
+      // Simulate auto-redirect after success
+      setTimeout(() => {
+        showNotification('Redirecting to dashboard...', 'info');
+        setTimeout(() => {
+          window.location.href = 'dashboard.html';
+        }, 1500);
+      }, 2000);
+    }
+
+    // Accept Friend Request
+    function acceptFriendRequest(email) {
+      // Get username from email for display purposes
+      const username = getUsernameFromEmail(email);
+      
+      // Add to friends list
+      const friends = getFriends();
+      friends.push({
+        email: email,
+        username: username,
+        addedDate: new Date().toISOString(),
+        status: 'active'
+      });
+      localStorage.setItem(`friends_${currentUser.email}`, JSON.stringify(friends));
+
+      // Add current user to their friends list too
+      const theirFriends = getFriends(email);
+      theirFriends.push({
+        email: currentUser.email,
+        username: currentUser.username,
+        addedDate: new Date().toISOString(),
+        status: 'active'
+      });
+      localStorage.setItem(`friends_${email}`, JSON.stringify(theirFriends));
+
+      // Remove from received requests
+      const receivedRequests = getReceivedRequests();
+      const updatedRequests = receivedRequests.filter(req => req !== email);
+      localStorage.setItem(`receivedRequests_${currentUser.email}`, JSON.stringify(updatedRequests));
+
+      showNotification(`You are now friends with ${username}!`, 'success');
+      loadFriends();
+      loadFriendRequests();
+      
+      // Dispatch custom event to update dashboard stats
+      window.dispatchEvent(new CustomEvent('friendsUpdated'));
+    }
+
+    // Decline Friend Request
+    function declineFriendRequest(email) {
+      const username = getUsernameFromEmail(email);
+      const receivedRequests = getReceivedRequests();
+      const updatedRequests = receivedRequests.filter(req => req !== email);
+      localStorage.setItem(`receivedRequests_${currentUser.email}`, JSON.stringify(updatedRequests));
+
+      showNotification(`Declined friend request from ${username}`, 'info');
+      loadFriendRequests();
+    }
+
+    // Remove Friend
+    function removeFriend(email) {
+      const username = getUsernameFromEmail(email);
+      if (!confirm(`Are you sure you want to remove ${username} from your friends?`)) {
+        return;
+      }
+
+      // Remove from current user's friends
+      const friends = getFriends();
+      const updatedFriends = friends.filter(friend => friend.email !== email);
+      localStorage.setItem(`friends_${currentUser.email}`, JSON.stringify(updatedFriends));
+
+      // Remove current user from their friends list too
+      const theirFriends = getFriends(email);
+      const updatedTheirFriends = theirFriends.filter(friend => friend.email !== currentUser.email);
+      localStorage.setItem(`friends_${email}`, JSON.stringify(updatedTheirFriends));
+
+      showNotification(`Removed ${username} from friends`, 'info');
+      loadFriends();
+      
+      // Dispatch custom event to update dashboard stats
+      window.dispatchEvent(new CustomEvent('friendsUpdated'));
+    }
+
+    // Load Friends List
+    function loadFriends() {
+      const friendList = document.getElementById('friendList');
+      const friends = getFriends();
+
+      if (friends.length === 0) {
+        friendList.innerHTML = `
+          <li class="friend-item">
+            <div class="empty-state">
+              <i class="fas fa-user-friends"></i>
+              <p>No friends yet</p>
+              <p style="font-size: 0.9rem; margin-top: 0.5rem;">Add some friends to get started!</p>
+            </div>
+          </li>
+        `;
+        return;
+      }
+
+      friendList.innerHTML = '';
+      friends.forEach(friend => {
+        const li = document.createElement('li');
+        li.className = 'friend-item';
+        li.innerHTML = `
+          <div class="friend-info">
+            <div class="friend-avatar">
+              ${friend.username ? friend.username.charAt(0).toUpperCase() : friend.email.charAt(0).toUpperCase()}
+            </div>
+            <div class="friend-details">
+              <h4>${friend.username || friend.email.split('@')[0]}</h4>
+              <p>${friend.email}</p>
+              <p style="font-size: 0.8rem; color: #999;">Friends since ${new Date(friend.addedDate).toLocaleDateString()}</p>
+            </div>
+          </div>
+          <div class="friend-actions">
+            <button class="btn-danger" onclick="removeFriend('${friend.email}')">
+              <i class="fas fa-user-minus"></i> Remove
+            </button>
+          </div>
+        `;
+        friendList.appendChild(li);
+      });
+    }
+
+    // Load Friend Requests
+    function loadFriendRequests() {
+      const requestList = document.getElementById('requestList');
+      const requests = getReceivedRequests();
+
+      if (requests.length === 0) {
+        requestList.innerHTML = `
+          <li class="friend-item">
+            <div class="empty-state">
+              <i class="fas fa-inbox"></i>
+              <p>No pending requests</p>
+            </div>
+          </li>
+        `;
+        return;
+      }
+
+      requestList.innerHTML = '';
+      requests.forEach(email => {
+        const username = getUsernameFromEmail(email);
+        const li = document.createElement('li');
+        li.className = 'friend-item';
+        li.innerHTML = `
+          <div class="friend-info">
+            <div class="friend-avatar">
+              ${username.charAt(0).toUpperCase()}
+            </div>
+            <div class="friend-details">
+              <h4>${username}</h4>
+              <p>${email}</p>
+              <p style="font-size: 0.9rem;">Wants to be your friend</p>
+            </div>
+          </div>
+          <div class="friend-actions">
+            <button class="btn-primary" onclick="acceptFriendRequest('${email}')" style="background: #28a745;">
+              <i class="fas fa-check"></i> Accept
+            </button>
+            <button class="btn-secondary" onclick="declineFriendRequest('${email}')">
+              <i class="fas fa-times"></i> Decline
+            </button>
+          </div>
+        `;
+        requestList.appendChild(li);
+      });
+    }
+
+    // Helper Functions
+    function getFriends(email = currentUser.email) {
+      const friends = localStorage.getItem(`friends_${email}`);
+      return friends ? JSON.parse(friends) : [];
+    }
+
+    function getSentRequests() {
+      const requests = localStorage.getItem(`sentRequests_${currentUser.email}`);
+      return requests ? JSON.parse(requests) : [];
+    }
+
+    function getReceivedRequests(email = currentUser.email) {
+      const requests = localStorage.getItem(`receivedRequests_${email}`);
+      return requests ? JSON.parse(requests) : [];
+    }
+
+    function isValidEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    function isRegisteredEmail(email) {
+      // Simulate registered users - in real app this would check a user database
+      const registeredEmails = [
+        'john@example.com', 
+        'jane@example.com', 
+        'alex@example.com', 
+        'sarah@example.com', 
+        'mike@example.com', 
+        'emma@example.com',
+        'test@test.com',
+        'demo@demo.com'
+      ];
+      return registeredEmails.includes(email.toLowerCase());
+    }
+
+    function getUsernameFromEmail(email) {
+      // Create username from email for display purposes
+      const emailToUsername = {
+        'john@example.com': 'john_doe',
+        'jane@example.com': 'jane_smith',
+        'alex@example.com': 'alex_wilson',
+        'sarah@example.com': 'sarah_jones',
+        'mike@example.com': 'mike_brown',
+        'emma@example.com': 'emma_davis',
+        'test@test.com': 'test_user',
+        'demo@demo.com': 'demo_user'
+      };
+      
+      return emailToUsername[email.toLowerCase()] || email.split('@')[0];
+    }
+
+    function messageUser(email) {
+      const username = getUsernameFromEmail(email);
+      showNotification(`Opening chat with ${username}... (Feature coming soon)`, 'info');
+    }
+
+    // Show Notification
+    function showNotification(message, type = 'info') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type}`;
+      
+      const icon = type === 'success' ? 'check-circle' : 
+                   type === 'error' ? 'times-circle' : 'info-circle';
+      notification.innerHTML = `<i class="fas fa-${icon}"></i> ${message}`;
+      
+      document.body.appendChild(notification);
+      
+      setTimeout(() => notification.classList.add('show'), 100);
+      setTimeout(() => {
+        notification.classList.remove('show');
+        setTimeout(() => document.body.removeChild(notification), 300);
+      }, 3000);
+    }
+
+    // Simulate some demo friend requests for testing
+    setTimeout(() => {
+      if (currentUser) {
+        const demoRequests = ['john@example.com', 'jane@example.com'];
+        localStorage.setItem(`receivedRequests_${currentUser.email}`, JSON.stringify(demoRequests));
+        loadFriendRequests();
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
