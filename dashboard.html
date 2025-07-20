@@ -539,6 +539,23 @@
     .notification.info {
       background: var(--primary-blue);
     }
+    .route-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.wide-btn {
+  width: 100%;
+  max-width: 400px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  justify-content: center;
+}
+
   </style>
 </head>
 <body>
@@ -548,20 +565,7 @@
       <h2 id="welcomeUser">Welcome back!</h2>
       <p id="userSubtext">Manage your events and connect with others!</p>
     </div>
-    <div class="user-stats">
-      <div class="stat-item">
-        <div class="stat-number" id="myRoutesCount">0</div>
-        <div>My Routes</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" id="followersCount">0</div>
-        <div>Followers</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" id="followingCount">0</div>
-        <div>Following</div>
-      </div>
-    </div>
+
     <div>
       <button onclick="logout()" class="btn-white">
         <i class="fas fa-sign-out-alt"></i> Logout
@@ -582,27 +586,30 @@
   </div>
 
   <!-- Main Dashboard Container -->
-  <div class="dashboard-container">
+ <!-- Route Planning Section -->
+<div class="dashboard-card full-width">
 
-    <!-- My Events Tab -->
-    <div id="my-events" class="tab-content active full-width">
-      <!-- Route Planning Section -->
-      <div class="dashboard-card full-width">
-        
-        <div class="quick-actions" style="margin-bottom: 1rem;">
-        <button onclick="window.location.href='route.html'" class="btn-primary" style="padding: 20px 40px; font-size: 1.2em;">
-            <i class="fas fa-route"></i> Find Route
-          </button>
-       
-        <button onclick="window.location.href='friends.html'" class="btn-primary" style="padding: 20px 40px; font-size: 1.2em;">
-            <i class="fas fa-route"></i> Connect with Friends
-          </button>
-        <!-- Route Information -->
-        <div id="routeInfo" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
-          <h4>Route Information</h4>
-          <div id="routeDetails"></div>
-        </div>
-      </div>
+  <div class="route-buttons">
+    <button onclick="window.location.href='route.html'" class="btn-primary wide-btn">
+      <i class="fas fa-route"></i> Find Route
+    </button>
+
+    <button onclick="window.location.href='friends.html'" class="btn-primary wide-btn">
+      <i class="fas fa-user-friends"></i> Connect with Friends
+    </button>
+
+    <button onclick="window.location.href='chatbot.html'" class="btn-primary wide-btn">
+      <i class="fas fa-robot"></i> RoutiBot
+    </button>
+  </div>
+
+  <div id="routeInfo" style="display: none; margin-top: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 10px;">
+    <h4>Route Information</h4>
+    <div id="routeDetails"></div>
+  </div>
+
+</div>
+
 
       <!-- User Profile Section -->
       <div class="dashboard-card profile-card">
@@ -658,34 +665,6 @@
               <span id="profileLocation">Location not set</span>
             </div>
           </div>
-          
-    <div class="location-sharing-controls" style="margin-bottom: 1rem;">
-          <div class="location-control-card">
-            <div class="location-header">
-              <div class="location-info">
-                <h4><i class="fas fa-location-dot"></i> Location Sharing</h4>
-                <p id="locationStatusText">Location sharing is disabled</p>
-              </div>
-              <div class="location-actions">
-                <button id="enableLocationBtn" onclick="enableLocationSharing()" class="btn-success">
-                  <i class="fas fa-location-arrow"></i> Enable Location
-                </button>
-                <button id="disableLocationBtn" onclick="disableLocationSharing()" class="btn-danger" style="display: none;">
-                  <i class="fas fa-location-slash"></i> Disable Location
-                </button>
-              </div>
-            </div>
-            <div id="locationDetails" class="location-details" style="display: none;">
-              <div class="location-status-indicator">
-                <span class="status-dot online"></span>
-                <span>Location is being shared with your followers</span>
-              </div>
-              <div class="location-info-text">
-                <small><i class="fas fa-shield-alt"></i> Your location is only visible to users who follow you</small>
-              </div>
-            </div>
-          </div>
-        </div>
         
           
           <div class="profile-actions">
